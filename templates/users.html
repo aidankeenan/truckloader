@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Users
+{% endblock %}
+
+{% block main %}
+    <table>
+        <tr>
+                <th>Username</th>
+                <th>Location</th>
+                <th>Total Moves</th>
+                <th>Remove User</th>
+        </tr>
+        {% for a in range(length) %}
+            <tr>
+                <td>{{ users[a]["username"] }}</td>
+                <td>{{ users[a]["currentlocation"] }} as of {{ users[a]["asof"] }}</td>
+                <td>{{ users[a]["moves"] }}</td>
+                <td>
+                    <form action="/users" method="post">
+                        <button class="btn btn-primary remove" type = "submit" name = "who" value = "{{ users[a]["username"] }}">Remove User</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

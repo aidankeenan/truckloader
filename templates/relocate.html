@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Relocate
+{% endblock %}
+
+{% block main %}
+      Set Scanner Location
+        <form action="/relocate" method="post">
+            <div class="form-group">
+                <select name="loc">
+                    <option value = "{{ setloc }}" selected> {{ setloc }} </option>
+                    {%for i in range(length) %}
+                        <option value="{{ locations[i]["loc_name"] }}">{{ locations[i]["loc_name"] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            Type Item Name or Scan Code
+            <div class="form-group">
+                <input autocomplete="off" autofocus class="form-control" name="item" placeholder="Item Name" type="text">
+            </div>
+            <button class="btn btn-primary" type="submit">Update Item Location</button>
+        </form>
+{% endblock %}

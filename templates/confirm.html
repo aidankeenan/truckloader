@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Users
+{% endblock %}
+
+{% block main %}
+    <!-- this div with help from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal -->
+    <div id = "confirmbox" class = "modal">
+        <div class = modal-content>
+            <p>Are you sure you want to delete user "{{ deletion }}"? This action cannot be undone.</p>
+            <form action="/delete" method="post">
+                <button class="btn btn-primary" name = "decision" value = "{{ deletion}}" type = "submit">Remove User</button>
+                <button class="btn btn-primary" name = "decision" value = "cancel" type = "submit">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <table>
+        <tr>
+                <th>Username</th>
+                <th>Location</th>
+                <th>Total Moves</th>
+                <th>Remove User</th>
+        </tr>
+        {% for a in range(length) %}
+            <tr>
+                <td>{{ users[a]["username"] }}</td>
+                <td>{{ users[a]["currentlocation"] }} as of {{ users[a]["asof"] }}</td>
+                <td>{{ users[a]["moves"] }}</td>
+                <td><button class="btn btn-primary remove" onclick = "confirm()">Remove User</button></td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

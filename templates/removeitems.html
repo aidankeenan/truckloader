@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit Inventory
+{% endblock %}
+
+{% block main %}
+<h1>Remove</h1>
+<div class="row">
+  <div class="column">
+        <h5>Locations</h5>
+            <form action="/removeitems" method="post">
+                <div class="form-group">
+                    <select name="location">
+                        <option value = "{{ None }}"></option>
+                        {%for i in range(loclength) %}
+                            <option value="{{ locations[i]["loc_name"] }}">{{ locations[i]["loc_name"] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Delete</button>
+                </div>
+            </form>
+  </div>
+  <div class="column">
+        <h5>Items</h5>
+            <form action="/removeitems" method="post">
+                <div class="form-group">
+                    <select name="item">
+                        <option value = "{{ None }}"></option>
+                        {%for i in range(itemlength) %}
+                            <option value="{{ items[i]["name"] }}">{{ items[i]["name"] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Delete</button>
+            </form>
+  </div>
+</div>
+{% endblock %}
