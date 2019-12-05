@@ -1,0 +1,10 @@
+Authlib
+Flask
+Flask-Session
+cs50
+tempfile
+werkzeug.exceptions
+werkzeug.security
+datetime
+helpers
+qrcode

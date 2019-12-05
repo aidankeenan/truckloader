@@ -46,6 +46,16 @@ def index():
     return render_template("homepage.html", items = items, length = length)
 
 
+@app.route("/print")
+@login_required
+def print():
+    """Show Where Everything Is"""
+    items = db.execute("SELECT * FROM inventory WHERE organization = ? ORDER BY name", session["org"])
+    length= len(items)
+    cols = round((length / 2) + 0.5)
+    return render_template("print.html", items = items, cols = cols, length = length)
+
+
 @app.route("/inventory", methods=["GET", "POST"])
 @login_required
 def inventory():
@@ -111,7 +121,7 @@ def inventory():
                 db.execute("INSERT INTO inventory(name, organization, location, lastmoved, mover) VALUES (?, ?, ?, ?, ?)", itemname, userdata[0]["organization"], loc, time, userdata[0]["username"] )
                 item = db.execute("SELECT * FROM inventory WHERE name = ?", itemname)
                 image = qrcode.make(f"{itemname}")
-                image.save(f"static/{item[0]['id']}.png", "PNG")
+                image.save(f"static/{itemname}.png", "PNG")
                 return redirect("/inventory")
 
 
@@ -143,11 +153,14 @@ def removeitems():
 
             #check location input
             else:
-                #check that location exits
+                #check that location exits and is empty
                 location = request.form.get("location")
                 loccheck = db.execute("SELECT * FROM locations WHERE loc_name = ? AND org = ?", location, session["org"])
+                emptycheck = db.execute("SELECT * FROM inventory WHERE location = ? AND organization = ?", location, session["org"])
                 if len(loccheck) != 1:
                     return apology("must select valid location")
+                elif len(emptycheck) != 0:
+                    return apology("you cannot delete non-empty locations (relocate items)")
 
                 #remove location
                 else:
@@ -237,7 +250,6 @@ def relocate():
         item = request.form.get("item")
         now = datetime.now()
         user = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])
-        print(f"{loc} {item} {now} {user}")
 
         #check if item is valid
         check = db.execute("SELECT * FROM inventory WHERE name = ? AND organization = ?", item, session["org"])
