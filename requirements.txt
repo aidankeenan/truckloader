@@ -2,10 +2,9 @@ Authlib
 Flask
 Flask-Session
 cs50
-tempfile
-werkzeug.exceptions
-werkzeug.security
-datetime
-helpers
-qrcode
+Tempfile
+Werkzeug.exceptions
+Werkzeug.security
+Datetime
+Qrcode
 truckloader.db
