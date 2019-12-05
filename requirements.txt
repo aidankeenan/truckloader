@@ -8,3 +8,4 @@ werkzeug.security
 datetime
 helpers
 qrcode
+truckloader.db
